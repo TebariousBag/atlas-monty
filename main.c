@@ -62,7 +62,13 @@ int main(int argc, char **argv)
 			char *endptr;
 			long int value;
 
-			value = strtol(strtok(NULL, " \t\n\r\f\v") &endptr, 10);
+			char *token = strtok(NULL, " \t\n\r\f\v");
+			value = strtol(token, &endptr, 10);
+			if (*endptr != '\0')
+			{
+				fprintf(stderr, "L<%d>: invalid number format\n", line_number);
+				continue;
+			}
 
 			push(&stack, value);
 
