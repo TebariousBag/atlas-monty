@@ -25,10 +25,6 @@ void push(stack_t **stack, int value)
 	*stack = newnode;
 }
 
-void pall()
-{
-
-}
 /**
  * main - start of program
  * argc: arg count
@@ -66,10 +62,6 @@ int main(int argc, char **argv)
 			push(&stack, value);
 
 		}
-		else if (strcmp(opcode, "pall") == 0) /*if it finds pall then will call pall and line number*/
-		{
-			pall(&stack, line_number);
-		}
 		else
 		{
 			fprintf(stderr, "%d %s\n", line_number, opcode);
@@ -78,6 +70,6 @@ int main(int argc, char **argv)
 
 	fclose(file);
 	free(line);
-	
+
 	return (EXIT_SUCCESS);
 }
