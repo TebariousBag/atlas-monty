@@ -39,7 +39,6 @@ int main(int argc, char **argv)
 	size_t len = 0; /*size of buffer*/
 	ssize_t read; /*what getline sees*/
 	unsigned int line_number = 0; /*counting lines*/
-	const char *str = "-123456789";
 	if (argc != 2)	/*if there is no arguement*/
 	{
 		fprintf(stderr, "L<%d>: usage: push integer\n", line_number); /*print error asked for*/
