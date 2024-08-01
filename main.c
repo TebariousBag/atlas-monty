@@ -75,5 +75,9 @@ int main(int argc, char **argv)
 			fprintf(stderr, "%d %s\n", line_number, opcode);
 		}
 	}
+
+	fclose(file);
+	free(line);
+	
 	return (EXIT_SUCCESS);
 }
