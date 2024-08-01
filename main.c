@@ -15,7 +15,7 @@ void push(stack_t **stack, int value)
 		exit (EXIT_FAILURE);
 	}
 
-	newnode->n = atoi(value);
+	newnode->n = value;
 	newnode->prev = NULL;
 	newnode->next = *stack;
 	if (*stack)
@@ -27,7 +27,7 @@ void push(stack_t **stack, int value)
 
 void pall()
 {
-	
+
 }
 /**
  * main - start of program
