@@ -60,7 +60,9 @@ int main(int argc, char **argv)
 		{
 			char *endptr;
 			long int value;
+
 			value = strol(strtok(NULL, " \t\n\r\f\v") &endptr, 10);
+			
 			push(&stack, value);
 
 		}
