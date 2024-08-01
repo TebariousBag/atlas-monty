@@ -34,7 +34,6 @@ void push(stack_t **stack, int value)
 
 int main(int argc, char **argv)
 {
-	int value = atoi(argv[1]);
 	FILE *file; /*file stream*/
 	char *line = NULL; /*buffer to hold the lines*/
 	size_t len = 0; /*size of buffer*/
@@ -59,6 +58,9 @@ int main(int argc, char **argv)
 
 		if (strcmp(opcode, "push") == 0) /*if it finds push, then we will call push and the line number*/
 		{
+			char *endptr;
+			long int value;
+			value = strol(strtok(NULL, " \t\n\r\f\v") &endptr, 10);
 			push(&stack, value);
 
 		}
