@@ -7,9 +7,6 @@
 #include <unistd.h>
 #include <ctype.h>
 
-extern stack_t *head;
-
-
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -39,6 +36,8 @@ typedef struct instruction_s
         char *opcode;
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
+
+extern stack_t *head;
 
 int main(int argc, char **argv);
 void freestack(stack_t *head);
