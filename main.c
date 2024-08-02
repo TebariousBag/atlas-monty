@@ -55,14 +55,24 @@ int main(int argc, char **argv)
 		line_number++; /*increment the line*/
 
 		char *opcode = strtok(line, " \t\n\r\f\v"); /*tokenize with delimeters*/
+		if (opcode == NULL)
+		{
+			fprintf(stderr, "line %u: no opcode", line_number);
+		}
 
 		if (strcmp(opcode, "push") == 0) /*if it finds push, then we will call push and the line number*/
 		{
+			char *token = strtok(NULL, " \t\n\r\f\v");
+
+			if (token == NULL)
+			{
+				fprintf(stderr, "line %u missing value\n", line_number);
+				continue;
+			}
 			char *endptr;
 			long int value;
-
-			char *token = strtok(NULL, " \t\n\r\f\v");
 			value = strtol(token, &endptr, 10);
+
 			if (*endptr != '\0')
 			{
 				fprintf(stderr, "L<%d>: invalid number format\n", line_number);
@@ -80,6 +90,7 @@ int main(int argc, char **argv)
 
 	fclose(file);
 	free(line);
+	freestack(stack);
 
 	return (EXIT_SUCCESS);
 }
