@@ -4,7 +4,6 @@
  * 
  */
 
-stack_t *head = NULL;
 
 void push(stack_t **stack, int value)
 {
