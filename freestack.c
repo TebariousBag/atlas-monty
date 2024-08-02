@@ -5,14 +5,14 @@
  * 
  */
 
-void freestack(stack_t *head)
+void freestack(stack_t *stack)
 {
 	stack_t *tmp;
 
-	while (head != NULL)
+	while (stack)
 	{
-		tmp = head;
-		head = head->next;
+		tmp = stack;
+		stack = stack->next;
 		free(tmp);
 	}
 }

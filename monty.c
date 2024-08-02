@@ -6,7 +6,7 @@
 
 stack_t *stack = NULL;
 
-void push(stack_t **stack, unsigned int line_number)
+void push(stack_t **stack, int value)
 {
 	stack_t *newnode = malloc(sizeof(stack_t));
 	if (!newnode)
@@ -15,7 +15,7 @@ void push(stack_t **stack, unsigned int line_number)
 		exit (EXIT_FAILURE);
 	}
 
-	newnode->n = line_number;
+	newnode->n = value;
 	newnode->prev = NULL;
 	newnode->next = *stack;
 	if (*stack)
@@ -53,39 +53,36 @@ int main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 
-	instruction_t instructions[] =
-	{
-		{"push", push},
-	};
+	initstack(); /*initialize stack*/
 
+	
 	while ((read = getline(&line, &len, file)) != -1)
 	{
-		line_number++; /*increment the line*/
+		line[strcspn(line, "\n")] = '\0'; /*removing newline*/
 
-		if (read == -1 || !*line)
-		{
-			fprintf(stderr, "error rreading line %u\n", line_number);
-		}
-		
-		char *opcode = strtok(line, " \t\n\r\f\v"); /*tokenize with delimeters*/
-		
-		if (!opcode)
-		{
-			fprintf(stderr, "line %u: no opcode", line_number);
-		}
+		char *opcode = strtok(line, " \t\n"); /*tokenize line with delimeters*/
 
-		for (unsigned int i = 0; i < sizeof(instructions) / sizeof(instruction_t); i++)
+		if (strcmp(opcode, "push") == 0)
 		{
-			if (strcmp(opcode, instructions[i].opcode) == 0)
+			int value = atoi(strtok(NULL, " \t\n"));
+
+			if (value == 0 || strcmp(opcode, "push") != 0)
 			{
-				instructions[i].f(&stack, line_number);
-				break;
+				fprintf(stderr, "L%d: usage: push integer\n", __LINE__);
+				exit(EXIT_FAILURE);
 			}
+			push(&head, value);
 		}
+		else
+		{
+			fprintf(stderr, "L%d: unknown instruction %s\n", __LINE__, opcode);
+			exit(EXIT_FAILURE);
+		}
+
 	}
 
-	fclose(file);
 	free(line);
+	fclose(file);
 	freestack(stack);
 
 	return (EXIT_SUCCESS);

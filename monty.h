@@ -40,5 +40,6 @@ typedef struct instruction_s
 
 int main(int argc, char **argv);
 void freestack(stack_t *head);
+void initstack();
 
 #endif
