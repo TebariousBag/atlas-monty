@@ -1,6 +1,9 @@
 #ifndef MONTY_H
 #define MONTY_H
 
+#ifdef __APPLE__
+#include <sys/_types/_sigaltstack.h> // Include the conflicting header if on macOS
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
