@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 
 	free(line);
 	fclose(file);
-	freestack(stack);
+	freestack(head);
 
 	return (EXIT_SUCCESS);
 }
