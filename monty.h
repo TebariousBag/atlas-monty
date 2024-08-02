@@ -7,8 +7,6 @@
 #include <unistd.h>
 #include <ctype.h>
 
-extern stack_t *head;
-
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
