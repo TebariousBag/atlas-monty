@@ -39,12 +39,13 @@ int main(int argc, char **argv)
 	size_t len = 0; /*size of buffer*/
 	ssize_t read; /*what getline sees*/
 	unsigned int line_number = 0; /*counting lines*/
-	if (argc != 2)	/*if there is no arguement*/
 
+	if (argc != 2)	/*if there is no arguement*/
 	{
 		fprintf(stderr, "L<%d>: usage: push integer\n", line_number); /*print error asked for*/
 		exit(EXIT_FAILURE);
 	}
+
 	file = fopen(argv[1], "r"); /*open file for reading*/
 	if (!file)
 	{
@@ -60,6 +61,12 @@ int main(int argc, char **argv)
 	while ((read = getline(&line, &len, file)) != -1)
 	{
 		line_number++; /*increment the line*/
+
+		if (read == -1 || !*line)
+		{
+			fprintf(stderr, "error rreading line %u\n", line_number);
+		}
+		
 		char *opcode = strtok(line, " \t\n\r\f\v"); /*tokenize with delimeters*/
 		
 		if (!opcode)
