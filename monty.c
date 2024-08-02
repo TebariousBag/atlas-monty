@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 		{
 			int value = atoi(strtok(NULL, " \t\n"));
 
-			if (value == 0 || strcmp(opcode, "push") != 0)
+			if (value == 0)
 			{
 				fprintf(stderr, "L%d: usage: push integer\n", __LINE__);
 				exit(EXIT_FAILURE);
