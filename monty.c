@@ -60,7 +60,6 @@ int main(int argc, char **argv)
 	ssize_t read; /*what getline sees*/
 	unsigned int line_number = 0;
 	char *opcode;
-	char *arg;
 
 
 	if (argc != 2) /*make sure there is a file*/
@@ -93,7 +92,7 @@ int main(int argc, char **argv)
 		}
 		else if (strcmp(opcode, "pall") == 0)
 		{
-			pall(&stack, line_number);
+			pall(&stack);
 		}
 		else
 		{
