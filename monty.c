@@ -80,8 +80,6 @@ int main(int argc, char **argv)
 
 	while ((read = getline(&line, &len, file)) != -1) /*read each line of file*/
 	{
-		line[strcspn(line, "\n")] = '\0'; /*remove the newline*/
-
 		opcode = strtok(line, " "); /*tokenize line based off spaces*/
 		arg = strtok(NULL, " ");
 
