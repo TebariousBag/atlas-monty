@@ -5,7 +5,7 @@
  */
 
 
-void push(stack_t **stack, int value)
+void push(stack_t **stack, int line_number)
 {
 	stack_t *newnode = malloc(sizeof(stack_t));
 	if (!newnode)
@@ -14,14 +14,26 @@ void push(stack_t **stack, int value)
 		exit (EXIT_FAILURE);
 	}
 
-	newnode->n = value;
+	newnode->n = line_number;
 	newnode->prev = NULL;
 	newnode->next = *stack;
-	if (*stack)
+	if (*stack != NULL)
 	{
 		(*stack)->prev = newnode;
 	}
 	*stack = newnode;
+	top = newnode;
+}
+
+void pall(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp = *stack;
+
+	while (temp != NULL)
+	{
+		printf("%d\n", temp->n);
+		temp = temp->next;
+	}
 }
 
 /**
@@ -37,52 +49,29 @@ int main(int argc, char **argv)
 	char *line = NULL; /*buffer to hold the lines*/
 	size_t len = 0; /*size of buffer*/
 	ssize_t read; /*what getline sees*/
-	unsigned int line_number = 0; /*counting lines*/
 
-	if (argc != 2)	/*if there is no arguement*/
-	{
-		fprintf(stderr, "L<%d>: usage: push integer\n", line_number); /*print error asked for*/
-		exit(EXIT_FAILURE);
-	}
-
-	file = fopen(argv[1], "r"); /*open file for reading*/
 	if (!file)
 	{
-		perror("Error opening the file");
+		perror("Error opening file");
 		return (EXIT_FAILURE);
 	}
-
-	initstack(); /*initialize stack*/
-
 	
 	while ((read = getline(&line, &len, file)) != -1)
 	{
-		line[strcspn(line, "\n")] = '\0'; /*removing newline*/
+		line[strcspn(line, "\n")] = '\0';
 
-		char *opcode = strtok(line, " \t\n"); /*tokenize line with delimeters*/
-
-		if (strcmp(opcode, "push") == 0)
+		if (strstr(line, "push") != NULL)
 		{
-			int value = atoi(strtok(NULL, " \t\n"));
-
-			if (value == 0)
-			{
-				fprintf(stderr, "L%d: usage: push integer\n", __LINE__);
-				exit(EXIT_FAILURE);
-			}
-			push(&head, value);
+			push(&stack, atoi(strtok(argv[1], "/")));
 		}
-		else
+		else if (strcmp(line, "pall") == 0)
 		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", __LINE__, opcode);
-			exit(EXIT_FAILURE);
+			pall(&stack, atoi(strtok(argv[1], "/")));
 		}
-
 	}
 
-	free(line);
 	fclose(file);
-	freestack(head);
+	free(line);
 
 	return (EXIT_SUCCESS);
 }
