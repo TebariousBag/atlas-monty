@@ -7,7 +7,7 @@
 stack_t *stack = NULL;
 stack_t *top = NULL;
 
-void push(stack_t **stack, int line_number)
+void push(stack_t **stack, int value, unsigned int line_number)
 {
 	stack_t *newnode = malloc(sizeof(stack_t));
 	if (newnode == NULL)
@@ -16,15 +16,15 @@ void push(stack_t **stack, int line_number)
 		exit (EXIT_FAILURE);
 	}
 
-	newnode->n = atoi(strtok(NULL, " "));
-	if (newnode->n == 0)
+	newnode->n = value;
+	newnode->prev = NULL;
+	newnode->next = *stack;
+
+	if (*stack != NULL)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-
-	newnode->prev = NULL;
-	newnode->next = *stack;
 
 	if (*stack != NULL)
 	{
@@ -60,6 +60,7 @@ int main(int argc, char **argv)
 	ssize_t read; /*what getline sees*/
 	unsigned int line_number = 0;
 	char *opcode;
+	char *arg;
 
 
 	if (argc != 2) /*make sure there is a file*/
@@ -86,13 +87,13 @@ int main(int argc, char **argv)
 
 		char *number = strtok(NULL, " ");
 
-		if (strcmp(opcode, "push") == 0 && number != NULL)
+		if (strcmp(opcode, "push") == 0 && arg != NULL)
 		{
-			push(&stack, line_number);
+			push(&stack, atoi(arg), line_number);
 		}
 		else if (strcmp(opcode, "pall") == 0)
 		{
-			pall(&stack);
+			pall(&stack, line_number);
 		}
 		else
 		{
