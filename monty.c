@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 
 		if (strlen(line) > 0 && line[strlen(line) - 1] != '\n')
 		{
-        fprintf(stderr, "Invalid file format: Expected newline at end of line.\n");
+        fprintf(stderr, "L%d: usage: push integer\n");
         free(line); // Free the line before returning
         fclose(file);
         return (EXIT_FAILURE);
