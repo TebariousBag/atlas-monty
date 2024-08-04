@@ -101,12 +101,6 @@ int main(int argc, char **argv)
 		{
 			pall(&stack);
 		}
-		else
-		{
-			fprintf(stderr, "L%d: usage: push integer\n", line_number);
-			freestack(stack);
-			return (EXIT_FAILURE);
-		}
 			
 	}
 
