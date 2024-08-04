@@ -83,22 +83,15 @@ int main(int argc, char **argv)
 		opcode = strtok(line, " "); /*tokenize line based off spaces*/
 		arg = strtok(NULL, " ");
 
-		if (strlen(line) > 0 && line[strlen(line) - 1] != '\n')
-		{
-			line_number++;
-        	fprintf(stderr, "L%d: usage: push integer\n", line_number);
-       	 	free(line); // Free the line before returning
-        	fclose(file);
-        	return (EXIT_FAILURE);
-		}
-
 		if (strcmp(opcode, "push") == 0 && arg != NULL)
 		{
 			push(&stack, line_number, arg);
+			line_number++;
 		}
 		else if (strcmp(opcode, "pall") == 0)
 		{
 			pall(&stack);
+			line_number++;
 		}
 			
 	}
