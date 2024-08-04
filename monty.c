@@ -4,6 +4,8 @@
  * 
  */
 
+stack_t *stack = NULL;
+stack_t *top = NULL;
 
 void push(stack_t **stack, int line_number)
 {
@@ -55,7 +57,7 @@ int main(int argc, char **argv)
 		perror("Error opening file");
 		return (EXIT_FAILURE);
 	}
-	
+
 	while ((read = getline(&line, &len, file)) != -1)
 	{
 		line[strcspn(line, "\n")] = '\0';
