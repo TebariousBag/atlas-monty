@@ -12,7 +12,7 @@ void push(stack_t **stack, int value, unsigned int line_number)
 	stack_t *newnode = malloc(sizeof(stack_t));
 	if (newnode == NULL)
 	{
-		fprintf(stderr, "L%d: malloc failed\n");
+		fprintf(stderr, "L: malloc failed\n");
 		exit (EXIT_FAILURE);
 	}
 
@@ -84,8 +84,6 @@ int main(int argc, char **argv)
 
 		opcode = strtok(line, " "); /*tokenize line based off spaces*/
 		arg = strtok(NULL, " ");
-
-		char *number = strtok(NULL, " ");
 
 		if (strcmp(opcode, "push") == 0 && arg != NULL)
 		{
