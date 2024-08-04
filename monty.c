@@ -51,6 +51,8 @@ int main(int argc, char **argv)
 	char *line = NULL; /*buffer to hold the lines*/
 	size_t len = 0; /*size of buffer*/
 	ssize_t read; /*what getline sees*/
+	char *number = strtok(line, "\n");
+
 
 	if (argc < 2)
 	{
@@ -70,9 +72,9 @@ int main(int argc, char **argv)
 	{
 		line[strcspn(line, "\n")] = '\0';
 
-		if (strstr(line, "push") != NULL && argv[1] != NULL)
+		if (number != NULL && strcmp(number, "push") == 0)
 		{
-			push(&stack, atoi(strtok(argv[1], "/")));
+			push(&stack, atoi(number));
 		}
 		else if (strcmp(line, "pall") == 0 && stack != NULL)
 		{
