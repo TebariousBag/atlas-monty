@@ -7,7 +7,7 @@
 stack_t *stack = NULL;
 stack_t *top = NULL;
 
-void push(stack_t **stack, int value, unsigned int line_number)
+void push(stack_t **stack, unsigned int line_number, const char *arg)
 {
 	stack_t *newnode = malloc(sizeof(stack_t));
 	if (newnode == NULL)
@@ -16,15 +16,16 @@ void push(stack_t **stack, int value, unsigned int line_number)
 		exit (EXIT_FAILURE);
 	}
 
-	newnode->n = value;
-	newnode->prev = NULL;
-	newnode->next = *stack;
+	newnode->n = atoi(arg);
 
-	if (*stack != NULL)
+	if (newnode->n == 0 && strcmp(arg, "0") != 0)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
+
+	newnode->prev = NULL;
+	newnode->next = *stack;
 
 	if (*stack != NULL)
 	{
