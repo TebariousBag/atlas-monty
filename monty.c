@@ -93,6 +93,11 @@ int main(int argc, char **argv)
 			pall(&stack);
 			line_number++;
 		}
+		else
+        {
+            fprintf(stderr, "L%d: usage: push integer\n", line_number);
+            continue; // Skip the rest of the loop for this iteration
+        }
 			
 	}
 
