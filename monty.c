@@ -7,7 +7,7 @@
 stack_t *stack = NULL;
 stack_t *top = NULL;
 
-void push(stack_t **stack, int value, unsigned int line_number)
+void push(stack_t **stack, int value)
 {
 	stack_t *newnode = malloc(sizeof(stack_t));
 	if (newnode == NULL)
@@ -87,11 +87,11 @@ int main(int argc, char **argv)
 
 		if (strcmp(opcode, "push") == 0 && arg != NULL)
 		{
-			push(&stack, atoi(arg), line_number);
+			push(&stack, atoi(arg));
 		}
 		else if (strcmp(opcode, "pall") == 0)
 		{
-			pall(&stack, line_number);
+			pall(&stack);
 		}
 		else
 		{
