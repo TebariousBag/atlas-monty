@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 	ssize_t read; /*what getline sees*/
 
 
-	if (argc < 2) /*make sure there is a file*/
+	if (argc != 2) /*make sure there is a file*/
 	{
 		fprintf(stderr, "Usage: monty file\n");
 		return (EXIT_FAILURE);

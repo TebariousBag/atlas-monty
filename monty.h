@@ -39,7 +39,7 @@ typedef struct instruction_s
 } instruction_t;
 
 extern stack_t *stack;
-extern stack_t *top;;
+extern stack_t *top;
 
 int main(int argc, char **argv);
 void freestack(stack_t *head);
