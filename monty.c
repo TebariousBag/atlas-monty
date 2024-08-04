@@ -74,16 +74,28 @@ int main(int argc, char **argv)
 		char *command = strtok(line, " "); /*tokenize line based off spaces*/
 		char *number = strtok(NULL, " ");
 
-		if (command != NULL) /*if command is not empty find command*/
+		if (!command || !number) /*if NULL*/
 		{
-			if (strcmp(command, "push") == 0 && number != NULL)
+			fprintf(stderr, "Syntax error\n");
+			continue;
+		}
+
+		if (strcmp(command, "push") == 0 && number != NULL)
+		{
+			long num = atol(number);
+			if (num <= 0)
 			{
-				push(&stack, atoi(number));
+				fprintf(stderr, "invalid number");
 			}
-			else if (strcmp(command, "pall") == 0)
-			{
-				pall(&stack);
-			}
+			push(&stack, num);
+		}
+		else if (strcmp(command, "pall") == 0)
+		{
+			pall(&stack);
+		}
+		else
+		{
+			fprintf(stderr, "L%d: unknown instruction %s\n", __LINE__, command);
 		}
 			
 	}
