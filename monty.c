@@ -87,6 +87,7 @@ int main(int argc, char **argv)
 
 		if (strlen(line) > 0 && line[strlen(line) - 1] != '\n')
 		{
+			line_number++;
         	fprintf(stderr, "L%d: usage: push integer\n", line_number);
        	 	free(line); // Free the line before returning
         	fclose(file);
@@ -101,8 +102,6 @@ int main(int argc, char **argv)
 		{
 			pall(&stack);
 		}
-
-		line_number++;
 			
 	}
 
