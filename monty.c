@@ -88,7 +88,7 @@ int main(int argc, char **argv)
 
 		if (strcmp(opcode, "push") == 0 && arg != NULL)
 		{
-			push(&stack, atoi(arg), line_number);
+			push(&stack, (unsigned int)atoi(arg), line_number);
 		}
 		else if (strcmp(opcode, "pall") == 0)
 		{
