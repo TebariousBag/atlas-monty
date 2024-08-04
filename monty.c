@@ -83,6 +83,14 @@ int main(int argc, char **argv)
 		line_number++;
 		line[strcspn(line, "\n")] = '\0'; /*remove the newline*/
 
+		if (strlen(line) > 0 && line[strlen(line) - 1] != '\n')
+		{
+        fprintf(stderr, "Invalid file format: Expected newline at end of line.\n");
+        free(line); // Free the line before returning
+        fclose(file);
+        return (EXIT_FAILURE);
+		}
+
 		opcode = strtok(line, " "); /*tokenize line based off spaces*/
 		arg = strtok(NULL, " ");
 
@@ -97,6 +105,8 @@ int main(int argc, char **argv)
 		else
 		{
 			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+			freestack(stack);
+			return (EXIT_FAILURE);
 		}
 			
 	}
