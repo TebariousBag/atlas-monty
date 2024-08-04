@@ -104,7 +104,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
+			fprintf(stderr, "L%d: usage: push integer\n", line_number, opcode);
 			freestack(stack);
 			return (EXIT_FAILURE);
 		}
