@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	size_t len = 0; /*size of buffer*/
 	ssize_t read; /*what getline sees*/
 
-	if (!file)
+	if (file)
 	{
 		perror("Error opening file");
 		return (EXIT_FAILURE);
