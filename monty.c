@@ -7,12 +7,12 @@
 stack_t *stack = NULL;
 stack_t *top = NULL;
 
-void push(stack_t **stack, int value)
+void push(stack_t **stack, int value, unsigned int line_number)
 {
 	stack_t *newnode = malloc(sizeof(stack_t));
 	if (newnode == NULL)
 	{
-		fprintf(stderr, "L: malloc failed\n");
+		fprintf(stderr, "L%d: malloc failed\n", line_number);
 		exit (EXIT_FAILURE);
 	}
 
@@ -22,7 +22,7 @@ void push(stack_t **stack, int value)
 
 	if (*stack != NULL)
 	{
-		fprintf(stderr, "L%d: usage: push integer\n", value);
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 
@@ -87,7 +87,7 @@ int main(int argc, char **argv)
 
 		if (strcmp(opcode, "push") == 0 && arg != NULL)
 		{
-			push(&stack, atoi(arg));
+			push(&stack, atoi(arg), line_number);
 		}
 		else if (strcmp(opcode, "pall") == 0)
 		{
