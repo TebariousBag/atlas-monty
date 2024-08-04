@@ -12,13 +12,20 @@ void push(stack_t **stack, int line_number)
 	stack_t *newnode = malloc(sizeof(stack_t));
 	if (newnode == NULL)
 	{
-		fprintf(stderr, "malloc failure\n");
+		fprintf(stderr, "L%d: malloc failed\n");
 		exit (EXIT_FAILURE);
 	}
 
-	newnode->n = line_number;
+	newnode->n = atoi(strtok(NULL, " "));
+	if (newnode->n == 0)
+	{
+		fprintf(stderr, "L%d: usage: push integer\n", line_number);
+		exit(EXIT_FAILURE);
+	}
+
 	newnode->prev = NULL;
 	newnode->next = *stack;
+
 	if (*stack != NULL)
 	{
 		(*stack)->prev = newnode;
@@ -27,7 +34,7 @@ void push(stack_t **stack, int line_number)
 	top = newnode;
 }
 
-void pall(stack_t **stack)
+void pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *temp = *stack;
 
@@ -51,6 +58,9 @@ int main(int argc, char **argv)
 	char *line = NULL; /*buffer to hold the lines*/
 	size_t len = 0; /*size of buffer*/
 	ssize_t read; /*what getline sees*/
+	unsigned int line_number = 0;
+	char *opcode;
+	char *arg;
 
 
 	if (argc != 2) /*make sure there is a file*/
@@ -69,33 +79,25 @@ int main(int argc, char **argv)
 
 	while ((read = getline(&line, &len, file)) != -1) /*read each line of file*/
 	{
+		line_number++;
 		line[strcspn(line, "\n")] = '\0'; /*remove the newline*/
 
-		char *command = strtok(line, " "); /*tokenize line based off spaces*/
+		opcode = strtok(line, " "); /*tokenize line based off spaces*/
+		arg = strtok(NULL, " ");
+
 		char *number = strtok(NULL, " ");
 
-		if (!command || !number) /*if NULL*/
+		if (strcmp(opcode, "push") == 0 && number != NULL)
 		{
-			fprintf(stderr, "Syntax error\n");
-			continue;
+			push(&stack, line_number);
 		}
-
-		if (strcmp(command, "push") == 0 && number != NULL)
+		else if (strcmp(opcode, "pall") == 0)
 		{
-			long num = atol(number);
-			if (num <= 0)
-			{
-				fprintf(stderr, "invalid number");
-			}
-			push(&stack, num);
-		}
-		else if (strcmp(command, "pall") == 0)
-		{
-			pall(&stack);
+			pall(&stack, line_number);
 		}
 		else
 		{
-			fprintf(stderr, "L%d: unknown instruction %s\n", __LINE__, command);
+			fprintf(stderr, "L%d: unknown instruction %s\n", line_number, opcode);
 		}
 			
 	}
