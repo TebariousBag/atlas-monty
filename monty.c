@@ -4,9 +4,6 @@
  * 
  */
 
-stack_t *stack = NULL;
-stack_t *top = NULL;
-
 void push(stack_t **stack, int line_number)
 {
 	stack_t *newnode = malloc(sizeof(stack_t));
