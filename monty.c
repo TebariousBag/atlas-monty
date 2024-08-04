@@ -80,8 +80,9 @@ int main(int argc, char **argv)
 
 	while ((read = getline(&line, &len, file)) != -1) /*read each line of file*/
 	{
-		line_number++;
 		line[strcspn(line, "\n")] = '\0'; /*remove the newline*/
+
+		line_number++;
 
 		if (strlen(line) > 0 && line[strlen(line) - 1] != '\n')
 		{
