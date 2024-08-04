@@ -7,12 +7,13 @@
 stack_t *stack = NULL;
 stack_t *top = NULL;
 
-void push(stack_t **stack, unsigned int line_number, const char *arg)
+void push(stack_t **stack, unsigned int line_number, const char *arg, int *error)
 {
 	stack_t *newnode = malloc(sizeof(stack_t));
 	if (newnode == NULL)
 	{
 		fprintf(stderr, "L%d: malloc failed\n", line_number);
+		*error = 1;
 		exit (EXIT_FAILURE);
 	}
 
@@ -21,7 +22,8 @@ void push(stack_t **stack, unsigned int line_number, const char *arg)
 	if (newnode->n == 0 && strcmp(arg, "0") != 0)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
+		*error = 1;
+		return;
 	}
 
 	newnode->prev = NULL;
@@ -62,6 +64,7 @@ int main(int argc, char **argv)
 	unsigned int line_number = 0;
 	char *opcode;
 	char *arg;
+	int error = 0;
 
 
 	if (argc != 2) /*make sure there is a file*/
@@ -85,8 +88,11 @@ int main(int argc, char **argv)
 
 		if (strcmp(opcode, "push") == 0 && arg != NULL)
 		{
-			push(&stack, line_number, arg);
+			push(&stack, line_number, arg, &error);
+			if (!error)
+			{
 			line_number++;
+			}
 		}
 		else if (strcmp(opcode, "pall") == 0)
 		{
@@ -94,11 +100,15 @@ int main(int argc, char **argv)
 			line_number++;
 		}
 		else
-        {
-            fprintf(stderr, "L%d: usage: push integer\n", line_number);
-            continue; // Skip the rest of the loop for this iteration
-        }
-			
+		{
+			fprintf(stderr, "L%d: usage: push int\n", line_number);
+			error = 1;
+		}
+
+		if (error)
+		{
+			continue;
+		}	
 	}
 
 	fclose(file);
