@@ -38,8 +38,8 @@ typedef struct instruction_s
         void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-stack_t *stack = NULL;
-stack_t *top = NULL;
+extern stack_t *stack;
+extern stack_t *top;;
 
 int main(int argc, char **argv);
 void freestack(stack_t *head);
