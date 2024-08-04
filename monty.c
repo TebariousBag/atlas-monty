@@ -51,35 +51,41 @@ int main(int argc, char **argv)
 	char *line = NULL; /*buffer to hold the lines*/
 	size_t len = 0; /*size of buffer*/
 	ssize_t read; /*what getline sees*/
-	char *number = strtok(line, "\n");
 
 
-	if (argc < 2)
+	if (argc < 2) /*make sure there is a file*/
 	{
 		fprintf(stderr, "Usage: monty file\n");
 		return (EXIT_FAILURE);
 	}
 
-	file = fopen(argv[1], "r");
+	file = fopen(argv[1], "r"); /*open the file for reading*/
 
-	if (file == NULL)
+	if (file == NULL) /*errror opening*/
 	{
 		perror("Error opening file");
 		return (EXIT_FAILURE);
 	}
 
-	while ((read = getline(&line, &len, file)) != -1)
+	while ((read = getline(&line, &len, file)) != -1) /*read each line of file*/
 	{
-		line[strcspn(line, "\n")] = '\0';
+		line[strcspn(line, "\n")] = '\0'; /*remove the newline*/
 
-		if (number != NULL && strcmp(number, "push") == 0)
+		char *command = strtok(line, " "); /*tokenize line based off spaces*/
+		char *number = strtok(NULL, " ");
+
+		if (command != NULL) /*if command is not empty find command*/
 		{
-			push(&stack, atoi(number));
+			if (strcmp(command, "push") == 0 && number != NULL)
+			{
+				push(&stack, atoi(number));
+			}
+			else if (strcmp(command, "pall") == 0)
+			{
+				pall(&stack, 0);
+			}
 		}
-		else if (strcmp(line, "pall") == 0 && stack != NULL)
-		{
-			pall(&stack, 0);
-		}
+			
 	}
 
 	fclose(file);
