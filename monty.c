@@ -82,16 +82,6 @@ int main(int argc, char **argv)
 	{
 		line[strcspn(line, "\n")] = '\0'; /*remove the newline*/
 
-		line_number++;
-
-		if (strlen(line) > 0 && line[strlen(line) - 1] != '\n')
-		{
-        fprintf(stderr, "L%d: usage: push integer\n", line_number);
-        free(line); // Free the line before returning
-        fclose(file);
-        return (EXIT_FAILURE);
-		}
-
 		opcode = strtok(line, " "); /*tokenize line based off spaces*/
 		arg = strtok(NULL, " ");
 
@@ -109,6 +99,8 @@ int main(int argc, char **argv)
 			freestack(stack);
 			return (EXIT_FAILURE);
 		}
+
+		line_number++;
 			
 	}
 
