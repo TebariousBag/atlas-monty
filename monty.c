@@ -91,13 +91,6 @@ int main(int argc, char **argv)
 		{
 			if (atoi(arg) == 0 && strcmp(arg, "0") != 0)
 			{
-        	fprintf(stderr, "L%d: usage: push integer\n", line_number);
-        	free(line); // Free the line before returning
-        	fclose(file);
-        	return (EXIT_FAILURE);
-			}
-			else
-			{
 				push(&stack, line_number, arg);
 			}
 		}
