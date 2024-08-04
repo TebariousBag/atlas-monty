@@ -79,10 +79,19 @@ int main(int argc, char **argv)
 
         if (strcmp(opcode, "push") == 0 && arg != NULL)
         {
-            push(&stack, line_number, arg, &error);
-            if (!error)
+            int converted_arg = atoi(arg);
+            if (converted_arg == 0 && strcmp(arg, "0") != 0) // Check if conversion to integer fails
             {
-                line_number++;
+                fprintf(stderr, "L%d: usage: push integer\n", line_number);
+                error = 1;
+            }
+            else
+            {
+                push(&stack, line_number, arg, &error);
+                if (!error)
+                {
+                    line_number++;
+                }
             }
         }
         else if (strcmp(opcode, "pall") == 0)
@@ -92,7 +101,7 @@ int main(int argc, char **argv)
         }
         else
         {
-            fprintf(stderr, "L%d: usage: push integer\n", line_number);
+            fprintf(stderr, "L%d: usage: push int\n", line_number);
             error = 1;
         }
 
