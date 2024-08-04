@@ -85,7 +85,7 @@ int main(int argc, char **argv)
 
 		if (strlen(line) > 0 && line[strlen(line) - 1] != '\n')
 		{
-        fprintf(stderr, "L%d: usage: push integer\n");
+        fprintf(stderr, "L%d: usage: push integer\n", line_number);
         free(line); // Free the line before returning
         fclose(file);
         return (EXIT_FAILURE);
