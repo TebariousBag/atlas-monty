@@ -10,7 +10,7 @@ stack_t *top = NULL;
 void push(stack_t **stack, int line_number)
 {
 	stack_t *newnode = malloc(sizeof(stack_t));
-	if (!newnode)
+	if (newnode == NULL)
 	{
 		fprintf(stderr, "malloc failure\n");
 		exit (EXIT_FAILURE);
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 	size_t len = 0; /*size of buffer*/
 	ssize_t read; /*what getline sees*/
 
-	if (file)
+	if (file == NULL)
 	{
 		perror("Error opening file");
 		return (EXIT_FAILURE);
@@ -62,13 +62,13 @@ int main(int argc, char **argv)
 	{
 		line[strcspn(line, "\n")] = '\0';
 
-		if (strstr(line, "push") != NULL)
+		if (strstr(line, "push") != NULL && argv[1] != NULL)
 		{
 			push(&stack, atoi(strtok(argv[1], "/")));
 		}
-		else if (strcmp(line, "pall") == 0)
+		else if (strcmp(line, "pall") == 0 && stack != NULL)
 		{
-			pall(&stack, atoi(strtok(argv[1], "/")));
+			pall(&stack, 0);
 		}
 	}
 
