@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 			}
 			else if (strcmp(command, "pall") == 0)
 			{
-				pall(&stack, 0);
+				pall(&stack);
 			}
 		}
 			
