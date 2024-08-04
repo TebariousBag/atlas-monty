@@ -52,6 +52,14 @@ int main(int argc, char **argv)
 	size_t len = 0; /*size of buffer*/
 	ssize_t read; /*what getline sees*/
 
+	if (argc < 2)
+	{
+		fprintf(stderr, "Usage: monty file\n");
+		return (EXIT_FAILURE);
+	}
+
+	file = fopen(argv[1], "r");
+
 	if (file == NULL)
 	{
 		perror("Error opening file");
