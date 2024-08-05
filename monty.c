@@ -57,6 +57,7 @@ int main(int argc, char *argv[])
     unsigned int line_number = 0;
     unsigned int i;
     char *opcode;
+    char *arg = NULL;
 
     if (argc != 2)
     {
@@ -83,8 +84,9 @@ int main(int argc, char *argv[])
     {
         line_number++;
         opcode = strtok(line, " \t\n");
+        arg = strtok(NULL, " \t\n");
 
-        if (opcode == NULL)
+        if (opcode == NULL || strcmp(opcode, "push") == 0 && arg == NULL)
         {
             line_number++;
             fprintf(stderr, "L%d: usage: push integer\n", line_number);
@@ -94,7 +96,14 @@ int main(int argc, char *argv[])
        {
         if (strcmp(opcode, instructions[i].opcode) == 0)
         {
-            instructions[i].f(&stack, line_number);
+            if (instructions[i].opcode == "push" && arg != NULL)
+            {
+                instructions[i].f(&stack, atoi(arg));
+            }
+            else
+            {
+                instructions[i].f(&stack, line_number);
+            }
             break;
         }
        }
