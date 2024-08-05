@@ -52,6 +52,7 @@ int main(int argc, char **argv)
     FILE *file;
     char *line = NULL;
     size_t len = 0;
+    ssize_t read;
     unsigned int line_number = 0;
     char *opcode;
     char *arg;
@@ -71,14 +72,14 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    while (getline(&line, &len, file) != EOF)
+    while ((read = getline(&line, &len, file)) != -1)
     {
         opcode = strtok(line, " ");
         arg = strtok(NULL, " ");
 
         if (strcmp(opcode, "push") == 0 && arg != NULL)
         {
-             int converted_arg = atoi(arg);
+            int converted_arg = atoi(arg);
             if (converted_arg == 0 && strcmp(arg, "0") != 0) // Check if conversion to integer fails
             {
                 fprintf(stderr, "L%d: usage: push integer\n", line_number);
