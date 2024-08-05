@@ -114,10 +114,10 @@ int main(int argc, char *argv[])
 
     fclose(file);
     free(line);
-    
+
     if (stack != NULL)
     {
-        freestack(stack);
+        freestack(&stack);
     }
 
     return EXIT_SUCCESS;
