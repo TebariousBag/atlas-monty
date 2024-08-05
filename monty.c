@@ -52,8 +52,7 @@ int main(int argc, char *argv[])
     unsigned int line_number = 0;
     char *opcode;
     char *arg;
-    int error = 0;
-
+	
     if (argc != 2)
     {
         fprintf(stderr, "Usage: monty file\n");
