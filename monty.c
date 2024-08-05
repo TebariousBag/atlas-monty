@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 
         if (opcode == NULL)
         {
-            fprintf(stderr, "L%d: usage monty file\n", line_number);
+            fprintf(stderr, "L%d: usage: push integer\n", line_number);
             exit(EXIT_FAILURE);
         }
        for (i = 0; instructions[i].opcode; i++)
