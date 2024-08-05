@@ -4,7 +4,6 @@
 #include <string.h>
 
 stack_t *stack = NULL;
-stack_t *top = NULL;
 
 void push(stack_t **stack, unsigned int line_number)
 {
@@ -45,6 +44,8 @@ void pall(stack_t **stack, unsigned int line_number)
 
 int main(int argc, char *argv[])
 {
+    stack = NULL;
+    top = NULL;
     FILE *file;
     char *line = NULL;
     size_t len = 0;
