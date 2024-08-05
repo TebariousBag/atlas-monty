@@ -17,6 +17,7 @@ void push(stack_t **stack, unsigned int line_number, const char *arg, int *error
     }
 
     newnode->n = atoi(arg);
+
     if (newnode->n == 0 && strcmp(arg, "0") != 0)
     {
         fprintf(stderr, "L%d: usage: push integer\n", line_number);
@@ -64,6 +65,7 @@ int main(int argc, char **argv)
     }
 
     file = fopen(argv[1], "r");
+
     if (file == NULL)
     {
         perror("Error opening file");
@@ -75,24 +77,12 @@ int main(int argc, char **argv)
         opcode = strtok(line, " ");
         arg = strtok(NULL, " ");
 
-       /* printf("Processing line %u: %s %s\n", line_number, opcode, arg); */
-
         if (strcmp(opcode, "push") == 0 && arg != NULL)
         {
-            int converted_arg = atoi(arg);
-            if (converted_arg == 0 && strcmp(arg, "0") != 0)
+            push(&stack, line_number, arg, &error);
+            if (!error)
             {
-                fprintf(stderr, "L%d: usage: push integer\n", line_number);
-                error = 1;
-                break;
-            }
-            else
-            {
-                push(&stack, line_number, arg, &error);
-                if (!error)
-                {
-                    line_number++;
-                }
+                line_number++;
             }
         }
         else if (strcmp(opcode, "pall") == 0)
@@ -102,16 +92,14 @@ int main(int argc, char **argv)
         }
         else
         {
-            fprintf(stderr, "L%d: usage: push int\n", line_number);
+            fprintf(stderr, "L%d: usage: push integer\n", line_number);
             error = 1;
-            break;
         }
 
         if (error)
         {
-            break;
-        }
-		line_number++;
+            continue;
+        }   
     }
 
     fclose(file);
