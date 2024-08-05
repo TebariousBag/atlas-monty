@@ -60,6 +60,11 @@ int main(int argc, char *argv[])
             instructions[i].f(&stack, line_number);
             break;
         }
+        if (!instructions[i].opcode)
+        {
+            fprintf(stderr, "L%d: unkown command %s\n", line_number, opcode);
+            exit(EXIT_FAILURE);
+        }
        }
 	}
 
