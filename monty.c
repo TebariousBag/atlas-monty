@@ -17,7 +17,6 @@ void push(stack_t **stack, unsigned int line_number, const char *arg, int *error
     }
 
     newnode->n = atoi(arg);
-
     if (newnode->n == 0 && strcmp(arg, "0") != 0)
     {
         fprintf(stderr, "L%d: usage: push integer\n", line_number);
@@ -80,10 +79,11 @@ int main(int argc, char **argv)
         if (strcmp(opcode, "push") == 0 && arg != NULL)
         {
             int converted_arg = atoi(arg);
-            if (converted_arg == 0 && strcmp(arg, "0") != 0) // Check if conversion to integer fails
+            if (converted_arg == 0 && strcmp(arg, "0") != 0)
             {
                 fprintf(stderr, "L%d: usage: push integer\n", line_number);
                 error = 1;
+                break;
             }
             else
             {
@@ -103,11 +103,12 @@ int main(int argc, char **argv)
         {
             fprintf(stderr, "L%d: usage: push int\n", line_number);
             error = 1;
+            break;
         }
 
         if (error)
         {
-            continue;
+            break;
         }   
     }
 
