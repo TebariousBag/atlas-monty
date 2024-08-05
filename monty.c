@@ -8,7 +8,6 @@ stack_t *stack = NULL;
 void push(stack_t **stack, unsigned int line_number)
 {
 	int value;
-    stack_t *newnode = malloc(sizeof(stack_t));
 	char *arg = strtok(NULL, " \t\n");
 
 	if (arg == NULL)
@@ -18,6 +17,8 @@ void push(stack_t **stack, unsigned int line_number)
 	}
 
 	value = atoi(arg);
+
+    stack_t *newnode = malloc(sizeof(stack_t));
 
     if (newnode == NULL)
     {
@@ -83,6 +84,11 @@ int main(int argc, char *argv[])
         line_number++;
         opcode = strtok(line, " \t\n");
 
+        if (opcode == NULL)
+        {
+            fprintf(stderr, "L%d: usage monty file\n", line_number);
+            exit(EXIT_FAILURE);
+        }
        for (i = 0; instructions[i].opcode; i++)
        {
         if (strcmp(opcode, instructions[i].opcode) == 0)
