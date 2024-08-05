@@ -52,6 +52,7 @@ int main(int argc, char **argv)
     FILE *file;
     char *line = NULL;
     size_t len = 0;
+    ssize_t read;
     unsigned int line_number = 0;
     char *opcode;
     char *arg;
@@ -71,7 +72,7 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    while (getline(&line, &len, file) != EOF)
+    while ((read = getline(&line, &len, file)) != -1)
     {
         opcode = strtok(line, " ");
         arg = strtok(NULL, " ");
