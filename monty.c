@@ -11,7 +11,7 @@ void push(stack_t **stack, unsigned int line_number)
     stack_t *newnode = malloc(sizeof(stack_t));
 	char *arg = strtok(NULL, " ");
 
-	if (!value)
+	if (arg == NULL)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
