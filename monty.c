@@ -57,7 +57,6 @@ int main(int argc, char *argv[])
     unsigned int line_number = 0;
     unsigned int i;
     char *opcode;
-    char *arg = NULL; // Variable to hold the argument
 
     if (argc != 2)
     {
@@ -66,6 +65,7 @@ int main(int argc, char *argv[])
     }
 
     file = fopen(argv[1], "r");
+
     if (file == NULL)
     {
         fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
@@ -82,33 +82,25 @@ int main(int argc, char *argv[])
     while ((getline(&line, &len, file)) != -1)
     {
         line_number++;
-        opcode = strtok(line, " \t\n"); // Parse opcode
-        arg = strtok(NULL, " \t\n"); // Parse argument
+        opcode = strtok(line, " \t\n");
 
-        if (opcode == NULL || (strcmp(opcode, "push") == 0 && arg == NULL))
+        if (opcode == NULL)
         {
+            line_number++;
             fprintf(stderr, "L%d: usage: push integer\n", line_number);
             exit(EXIT_FAILURE);
         }
-
-        for (i = 0; instructions[i].opcode; i++)
+       for (i = 0; instructions[i].opcode; i++)
+       {
+        if (strcmp(opcode, instructions[i].opcode) == 0)
         {
-            if (strcmp(opcode, instructions[i].opcode) == 0)
-            {
-                if (strcmp(instructions[i].opcode, "push") == 0 && arg != NULL)
-                {
-                    instructions[i].f(&stack, atoi(arg)); // Convert argument to int and pass
-                }
-                else
-                {
-                    instructions[i].f(&stack, line_number); // Pass line number for other commands
-                }
-                break;
-            }
+            instructions[i].f(&stack, line_number);
+            break;
         }
+       }
 
-        free(line);
-    }
+       free(line);
+	}
 
     fclose(file);
     freestack(&stack);
