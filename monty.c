@@ -72,7 +72,7 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-    while ((read = getline(&line, &len, file)) != -1)
+    while (getline(&line, &len, file) != EOF)
     {
         opcode = strtok(line, " ");
         arg = strtok(NULL, " ");
