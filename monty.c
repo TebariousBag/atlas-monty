@@ -110,12 +110,15 @@ int main(int argc, char *argv[])
             break;
         }
        }
-
-       free(line);
 	}
 
     fclose(file);
-    freestack(&stack);
+    free(line);
+    
+    if (stack != NULL)
+    {
+        freestack(stack);
+    }
 
     return EXIT_SUCCESS;
 }
