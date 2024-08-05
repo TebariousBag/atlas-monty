@@ -10,7 +10,7 @@ void push(stack_t **stack, unsigned int line_number)
 	int value;
 	char *arg = strtok(NULL, " \t\n");
 
-	if (arg == NULL)
+	if (!arg)
 	{
 		fprintf(stderr, "L%d: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
@@ -20,7 +20,7 @@ void push(stack_t **stack, unsigned int line_number)
 
     stack_t *newnode = malloc(sizeof(stack_t));
 
-    if (newnode == NULL)
+    if (!newnode)
     {
         fprintf(stderr, "L%d: malloc failed\n", line_number);
         exit(EXIT_FAILURE);
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
         line_number++;
         opcode = strtok(line, " \t\n");
 
-        if (opcode == NULL)
+        if (!opcode)
         {
             line_number++;
             fprintf(stderr, "L%d: usage: push integer\n", line_number);
