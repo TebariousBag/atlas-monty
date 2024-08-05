@@ -56,7 +56,6 @@ int main(int argc, char *argv[])
     unsigned int line_number = 0;
     unsigned int i;
     char *opcode;
-    char *arg;
 
     if (argc != 2)
     {
