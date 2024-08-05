@@ -5,7 +5,6 @@
 
 stack_t *stack = NULL;
 stack_t *top = NULL;
-global_stack = NULL;
 
 void push(stack_t **stack, unsigned int line_number)
 {
