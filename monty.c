@@ -72,8 +72,8 @@ int main(int argc, char **argv)
 
     while ((read = getline(&line, &len, file)) != -1)
     {
-        opcode = strtok(line, " ");
-        arg = strtok(NULL, " ");
+        opcode = strtok(line, " \t\n");
+        arg = strtok(NULL, " \t\n");
 
        /* printf("Processing line %u: %s %s\n", line_number, opcode, arg); */
 
