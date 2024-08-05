@@ -9,7 +9,7 @@ void push(stack_t **stack, unsigned int line_number)
 {
 	int value;
     stack_t *newnode = malloc(sizeof(stack_t));
-	char *arg = strtok(NULL, " ");
+	char *arg = strtok(NULL, " \t\n");
 
 	if (arg == NULL)
 	{
@@ -26,7 +26,12 @@ void push(stack_t **stack, unsigned int line_number)
     }
 
     newnode->n = value;
+    newnode->prev = NULL;
     newnode->next = *stack;
+    if (*stack)
+    {
+        (*stack)->prev = newnode;
+    }
     *stack = newnode;
 }
 
@@ -49,6 +54,7 @@ int main(int argc, char *argv[])
     char *line = NULL;
     size_t len = 0;
     unsigned int line_number = 0;
+    unsigned int i;
     char *opcode;
     char *arg;
 
@@ -66,21 +72,28 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
+    instruction_t instructions[] =
+    {
+        {"push", push},
+        {"pall", pall},
+        {NULL, NULL}
+    };
+
     while ((getline(&line, &len, file)) != -1)
     {
-        opcode = strtok(line, " ");
-        arg = strtok(NULL, " ");
+        line_number++;
+        opcode = strtok(line, " \t\n");
 
-		line_number++;
+       for (i = 0; instructions[i].opcode; i++)
+       {
+        if (strcmp(opcode, instructions[i].opcode) == 0)
+        {
+            instructions[i].f(&stack, line_number);
+            break;
+        }
+       }
 
-        if (strcmp(opcode, "push") == 0 && arg != NULL)
-		{
-			push(&stack, line_number);
-		}
-		else if (strcmp(opcode, "pall") == 0)
-		{
-			pall(&stack, line_number);
-		}
+       free(line);
 	}
 
     fclose(file);
