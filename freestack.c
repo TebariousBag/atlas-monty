@@ -12,7 +12,7 @@ void freestack(stack_t **stack)
 	while (*stack != NULL)
 	{
 		tmp = *stack;
-		stack = (*stack)->next;
+		*stack = (*stack)->next;
 		free(tmp);
 		tmp = NULL;
 	}
