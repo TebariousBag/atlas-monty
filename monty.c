@@ -3,50 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-stack_t *stack = NULL;
-
-void push(stack_t **stack, unsigned int line_number)
-{
-	int value;
-	char *arg = strtok(NULL, " \t\n");
-
-	if (arg == NULL)
-	{
-		fprintf(stderr, "L%d: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
-	}
-
-	value = atoi(arg);
-
-    stack_t *newnode = malloc(sizeof(stack_t));
-
-    if (newnode == NULL)
-    {
-        fprintf(stderr, "L%d: malloc failed\n", line_number);
-        exit(EXIT_FAILURE);
-    }
-
-    newnode->n = value;
-    newnode->prev = NULL;
-    newnode->next = *stack;
-    if (*stack)
-    {
-        (*stack)->prev = newnode;
-    }
-    *stack = newnode;
-}
-
-void pall(stack_t **stack, unsigned int line_number)
-{
-	(void)line_number;
-   stack_t *current = *stack;
-
-   while (current)
-   {
-	printf("%d\n", current->n);
-	current = current->next;
-   }
-}
+// Assuming freestack is defined elsewhere and frees each node properly
+void freestack(stack_t **stack);
 
 int main(int argc, char *argv[])
 {
@@ -57,7 +15,7 @@ int main(int argc, char *argv[])
     unsigned int line_number = 0;
     unsigned int i;
     char *opcode;
-    char *arg = NULL;
+    char *arg = NULL; // Variable to hold the argument
 
     if (argc != 2)
     {
@@ -66,7 +24,6 @@ int main(int argc, char *argv[])
     }
 
     file = fopen(argv[1], "r");
-
     if (file == NULL)
     {
         fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
@@ -83,33 +40,33 @@ int main(int argc, char *argv[])
     while ((getline(&line, &len, file)) != -1)
     {
         line_number++;
-        opcode = strtok(line, " \t\n");
-        arg = strtok(NULL, " \t\n");
+        opcode = strtok(line, " \t\n"); // Parse opcode
+        arg = strtok(NULL, " \t\n"); // Parse argument
 
-        if (opcode == NULL || strcmp(opcode, "push") == 0 && arg == NULL)
+        if (opcode == NULL || (strcmp(opcode, "push") == 0 && arg == NULL))
         {
-            line_number++;
             fprintf(stderr, "L%d: usage: push integer\n", line_number);
             exit(EXIT_FAILURE);
         }
-       for (i = 0; instructions[i].opcode; i++)
-       {
-        if (strcmp(opcode, instructions[i].opcode) == 0)
-        {
-            if (instructions[i].opcode == "push" && arg != NULL)
-            {
-                instructions[i].f(&stack, atoi(arg));
-            }
-            else
-            {
-                instructions[i].f(&stack, line_number);
-            }
-            break;
-        }
-       }
 
-       free(line);
-	}
+        for (i = 0; instructions[i].opcode; i++)
+        {
+            if (strcmp(opcode, instructions[i].opcode) == 0)
+            {
+                if (strcmp(instructions[i].opcode, "push") == 0 && arg != NULL)
+                {
+                    instructions[i].f(&stack, atoi(arg)); // Convert argument to int and pass
+                }
+                else
+                {
+                    instructions[i].f(&stack, line_number); // Pass line number for other commands
+                }
+                break;
+            }
+        }
+
+        free(line);
+    }
 
     fclose(file);
     freestack(&stack);
