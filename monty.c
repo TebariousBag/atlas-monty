@@ -64,7 +64,6 @@ int main(int argc, char **argv)
     }
 
     file = fopen(argv[1], "r");
-
     if (file == NULL)
     {
         perror("Error opening file");
@@ -75,6 +74,8 @@ int main(int argc, char **argv)
     {
         opcode = strtok(line, " ");
         arg = strtok(NULL, " ");
+
+        printf("Processing line %u: %s %s\n", line_number, opcode, arg); // Debugging output
 
         if (strcmp(opcode, "push") == 0 && arg != NULL)
         {
