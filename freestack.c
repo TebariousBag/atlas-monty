@@ -13,6 +13,10 @@ void freestack(stack_t **stack)
 	{
 		tmp = *stack;
 		*stack = (*stack)->next;
+		if (*stack != NULL)
+		{
+			(*stack)->prev = NULL;
+		}
 		free(tmp);
 		tmp = NULL;
 	}
