@@ -44,6 +44,13 @@ int main(int argc, char *argv[])
 
     while ((getline(&line, &len, file)) != -1)
     {
+        line[strcspn(line, "\n")] = 0;
+        line = strspn(line, " \t\n");
+        if (line[0] == '\n')
+        {
+            continue;
+        }
+        
         line_number++;
         opcode = strtok(line, " \t\n");
 
