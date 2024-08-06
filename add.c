@@ -21,10 +21,11 @@ void add(stack_t **stack, unsigned int line_number)
 	temp = (*stack)->next;
 	(*stack)->next = temp->next;
 	temp->next = NULL;
+	*stack = temp;
 
 	sum = temp->n + (*stack)->n;
 
 	temp->n = sum;
-	temp->next = *stack;
+	temp->next = NULL;
 	*stack = temp;
 }
