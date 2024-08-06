@@ -63,7 +63,6 @@ int main(int argc, char *argv[])
         else if (!instructions[i].opcode)
         {
             fprintf(stderr, "L%d: unkown command %s\n", line_number, opcode);
-            exit(EXIT_FAILURE);
         }
        }
 	}
